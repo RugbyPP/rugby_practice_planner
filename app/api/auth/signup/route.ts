@@ -5,6 +5,8 @@ import { hashPassword, generateToken, setAuthCookie } from '@/lib/auth';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 
+export const dynamic = 'force-dynamic';
+
 const signupSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
