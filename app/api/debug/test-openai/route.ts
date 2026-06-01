@@ -3,7 +3,7 @@ import OpenAI from 'openai';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const apiKey = process.env.OPENAI_API_KEY;
     
