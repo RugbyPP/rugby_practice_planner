@@ -22,22 +22,29 @@ const generateSessionSchema = z.object({
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    console.log('Request body:', JSON.stringify(body));
+    
     const input = generateSessionSchema.parse(body);
+    console.log('Parsed input:', JSON.stringify(input));
 
     // Generate session plan using LLM
+    console.log('Calling generateSession...');
     const plan = await generateSession(input);
+    console.log('Plan generated, length:', plan?.length);
 
     return NextResponse.json({ plan });
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.error('Validation error:', error.errors);
       return NextResponse.json(
         { error: 'Invalid input', details: error.errors },
         { status: 400 }
       );
     }
     console.error('Session generation error:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: 'Failed to generate session' },
+      { error: 'Failed to generate session', details: errorMessage },
       { status: 500 }
     );
   }
