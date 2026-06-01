@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
-import { users } from '@/lib/db/schema';
+import { query } from '@/lib/db/client';
 import { hashPassword, generateToken, setAuthCookie } from '@/lib/auth';
-import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
@@ -19,13 +17,12 @@ export async function POST(req: NextRequest) {
     const { email, password, name } = signupSchema.parse(body);
 
     // Check if user already exists
-    const existingUser = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, email))
-      .limit(1);
+    const existingResult = await query(
+      'SELECT id FROM users WHERE email = $1 LIMIT 1',
+      [email]
+    ) as any;
 
-    if (existingUser.length > 0) {
+    if (existingResult.rows && existingResult.rows.length > 0) {
       return NextResponse.json(
         { error: 'Email already registered' },
         { status: 400 }
@@ -36,16 +33,12 @@ export async function POST(req: NextRequest) {
     const passwordHash = await hashPassword(password);
 
     // Create user
-    const result = await db
-      .insert(users)
-      .values({
-        email,
-        passwordHash,
-        name,
-      })
-      .returning();
+    const result = await query(
+      'INSERT INTO users (email, password_hash, name) VALUES ($1, $2, $3) RETURNING id, email, name',
+      [email, passwordHash, name]
+    ) as any;
 
-    const newUser = result[0];
+    const newUser = result.rows?.[0];
 
     // Generate token
     const token = generateToken({ userId: newUser.id, email: newUser.email });

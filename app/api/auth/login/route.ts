@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
-import { users } from '@/lib/db/schema';
+import { query } from '@/lib/db/client';
 import { verifyPassword, generateToken, setAuthCookie } from '@/lib/auth';
-import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
@@ -17,24 +15,23 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { email, password } = loginSchema.parse(body);
 
-    // Find user
-    const result = await db
-      .select()
-      .from(users)
-      .where(eq(users.email, email))
-      .limit(1);
+    // Find user with raw query
+    const result = await query(
+      'SELECT id, email, password_hash, name FROM users WHERE email = $1 LIMIT 1',
+      [email]
+    ) as any;
 
-    if (result.length === 0) {
+    if (!result.rows || result.rows.length === 0) {
       return NextResponse.json(
         { error: 'Invalid email or password' },
         { status: 401 }
       );
     }
 
-    const user = result[0];
+    const user = result.rows[0];
 
     // Verify password
-    const isValid = await verifyPassword(password, user.passwordHash);
+    const isValid = await verifyPassword(password, user.password_hash);
     if (!isValid) {
       return NextResponse.json(
         { error: 'Invalid email or password' },
