@@ -1,6 +1,7 @@
-import Anthropic from '@anthropic-ai/sdk';
-const anthropic = new Anthropic({
-  apiKey: process.env.OPENAI_API_KEY, // Using same env var for API key
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 export interface SessionGenerationInput {
@@ -117,11 +118,14 @@ ${contactWarning}
 Create a structured, age-appropriate session that addresses the topic and principle. Ensure all activities are safe for the age group and contact level specified.`;
 
   try {
-    const message = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+    const message = await openai.chat.completions.create({
+      model: 'gpt-4o',
       max_tokens: 2000,
-      system: SYSTEM_PROMPT,
       messages: [
+        {
+          role: 'system',
+          content: SYSTEM_PROMPT,
+        },
         {
           role: 'user',
           content: userPrompt,
@@ -129,12 +133,12 @@ Create a structured, age-appropriate session that addresses the topic and princi
       ],
     });
 
-    const content = message.content[0];
-    if (content.type !== 'text') {
-      throw new Error('Unexpected response type from Claude');
+    const content = message.choices[0].message.content;
+    if (!content) {
+      throw new Error('No content in response from OpenAI');
     }
 
-    return content.text;
+    return content;
   } catch (error) {
     console.error('LLM generation error:', error);
     throw new Error('Failed to generate session plan');
@@ -222,11 +226,14 @@ ${context.ageGrade.includes('7') || context.ageGrade.includes('8')
   }
 
   try {
-    const message = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+    const message = await openai.chat.completions.create({
+      model: 'gpt-4o',
       max_tokens: 2000,
-      system: SYSTEM_PROMPT,
       messages: [
+        {
+          role: 'system',
+          content: SYSTEM_PROMPT,
+        },
         {
           role: 'user',
           content: `Original session plan:\n\n${originalPlan}\n\n---\n\n${adaptationPrompt}`,
@@ -234,12 +241,12 @@ ${context.ageGrade.includes('7') || context.ageGrade.includes('8')
       ],
     });
 
-    const content = message.content[0];
-    if (content.type !== 'text') {
-      throw new Error('Unexpected response type from Claude');
+    const content = message.choices[0].message.content;
+    if (!content) {
+      throw new Error('No content in response from OpenAI');
     }
 
-    return content.text;
+    return content;
   } catch (error) {
     console.error('LLM adaptation error:', error);
     throw new Error('Failed to generate adaptation');
@@ -267,11 +274,14 @@ Generate a brief progression suggestion (100-150 words) that:
 Format as a clear, actionable suggestion for the coach.`;
 
   try {
-    const message = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
+    const message = await openai.chat.completions.create({
+      model: 'gpt-4o',
       max_tokens: 300,
-      system: 'You are an expert rugby coach providing progression suggestions for session planning.',
       messages: [
+        {
+          role: 'system',
+          content: 'You are an expert rugby coach providing progression suggestions for session planning.',
+        },
         {
           role: 'user',
           content: prompt,
@@ -279,12 +289,12 @@ Format as a clear, actionable suggestion for the coach.`;
       ],
     });
 
-    const content = message.content[0];
-    if (content.type !== 'text') {
-      throw new Error('Unexpected response type from Claude');
+    const content = message.choices[0].message.content;
+    if (!content) {
+      throw new Error('No content in response from OpenAI');
     }
 
-    return content.text;
+    return content;
   } catch (error) {
     console.error('LLM progression error:', error);
     throw new Error('Failed to generate progression suggestion');
