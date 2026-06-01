@@ -3,17 +3,6 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "framework": "nextjs",
-  "env": {
-    "POSTGRES_URL_NON_POOLING": {
-      "description": "PostgreSQL connection string from Neon"
-    },
-    "JWT_SECRET": {
-      "description": "JWT secret for authentication"
-    },
-    "OPENAI_API_KEY": {
-      "description": "OpenAI API key for Claude 3.5 Sonnet"
-    }
-  },
   "functions": {
     "api/**/*.ts": {
       "maxDuration": 60
