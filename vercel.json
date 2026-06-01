@@ -4,7 +4,7 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "env": {
-    "DATABASE_URL": "@database_url",
+    "POSTGRES_URL_NON_POOLING": "@postgres_url_non_pooling",
     "JWT_SECRET": "@jwt_secret",
     "OPENAI_API_KEY": "@openai_api_key"
   },
