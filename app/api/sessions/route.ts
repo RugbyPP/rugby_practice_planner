@@ -79,23 +79,22 @@ export async function POST(req: NextRequest) {
       .insert(sessions)
       .values({
         userId: user.userId,
-        seriesId,
+        seriesId: seriesId || undefined,
         sessionNumber: data.currentSession || 1,
         title: `${data.ageGrade} — ${data.coachingTopic}`,
         ageGrade: data.ageGrade,
         gender: data.gender,
-        playerCount: data.playerCount,
+        playerCount: parseInt(data.playerCount),
         abilityLevel: data.abilityLevel,
-        sessionLength: data.sessionLength,
-        coachingTopic: data.coachingTopic,
-        principleOfPlay: data.principleOfPlay,
-        playerStruggles: data.playerStruggles,
+        sessionLength: parseInt(data.sessionLength),
+        topic: data.coachingTopic,
+        principle: data.principleOfPlay || '',
+        struggles: data.playerStruggles,
         desiredOutcome: data.desiredOutcome,
         contactLevel: data.contactLevel,
         equipment: data.equipment,
         space: data.space,
         planMarkdown: '', // Will be filled by generation endpoint
-        isAIGenerated: true,
       })
       .returning();
 

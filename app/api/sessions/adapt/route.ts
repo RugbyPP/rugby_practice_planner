@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     const session = sessionResult[0];
 
     // Verify user owns this session
-    if (session.userId !== user.id) {
+    if (session.userId !== user.userId) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
     }
 
@@ -75,7 +75,7 @@ export async function POST(req: NextRequest) {
       .insert(adaptations)
       .values({
         sessionId,
-        userId: user.id,
+        userId: user.userId,
         adaptationType,
         adaptedMarkdown,
       })

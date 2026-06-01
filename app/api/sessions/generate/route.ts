@@ -40,7 +40,8 @@ export async function POST(req: NextRequest) {
     const result = await db
       .insert(sessions)
       .values({
-        userId: user.id,
+        userId: user.userId,
+        title: input.topic, // Use topic as title for now
         ageGrade: input.ageGrade,
         gender: input.gender,
         playerCount: input.playerCount,
@@ -55,8 +56,7 @@ export async function POST(req: NextRequest) {
         space: input.space,
         planMarkdown,
         seriesId: input.seriesId,
-        sessionNumber: input.sessionNumber,
-        totalSessions: input.totalSessions,
+        sessionNumber: input.sessionNumber || 1,
       })
       .returning();
 

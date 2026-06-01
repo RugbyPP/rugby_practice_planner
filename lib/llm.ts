@@ -1,7 +1,6 @@
-import { OpenAI } from 'openai';
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+import Anthropic from '@anthropic-ai/sdk';
+const anthropic = new Anthropic({
+  apiKey: process.env.OPENAI_API_KEY, // Using same env var for API key
 });
 
 export interface SessionGenerationInput {
@@ -118,7 +117,7 @@ ${contactWarning}
 Create a structured, age-appropriate session that addresses the topic and principle. Ensure all activities are safe for the age group and contact level specified.`;
 
   try {
-    const message = await openai.messages.create({
+    const message = await anthropic.messages.create({
       model: 'claude-3-5-sonnet-20241022',
       max_tokens: 2000,
       system: SYSTEM_PROMPT,
@@ -223,7 +222,7 @@ ${context.ageGrade.includes('7') || context.ageGrade.includes('8')
   }
 
   try {
-    const message = await openai.messages.create({
+    const message = await anthropic.messages.create({
       model: 'claude-3-5-sonnet-20241022',
       max_tokens: 2000,
       system: SYSTEM_PROMPT,
@@ -268,7 +267,7 @@ Generate a brief progression suggestion (100-150 words) that:
 Format as a clear, actionable suggestion for the coach.`;
 
   try {
-    const message = await openai.messages.create({
+    const message = await anthropic.messages.create({
       model: 'claude-3-5-sonnet-20241022',
       max_tokens: 300,
       system: 'You are an expert rugby coach providing progression suggestions for session planning.',

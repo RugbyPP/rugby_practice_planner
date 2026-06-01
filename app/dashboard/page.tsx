@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 interface Session {
   id: number
@@ -14,7 +13,6 @@ interface Session {
 }
 
 export default function DashboardPage() {
-  const router = useRouter()
   const [sessions, setSessions] = useState<Session[]>([])
   const [loading, setLoading] = useState(true)
   const [stats, setStats] = useState({
