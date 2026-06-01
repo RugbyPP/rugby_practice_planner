@@ -30,7 +30,7 @@ export default function CreateSessionPage() {
     }))
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     if (step < 4) {
@@ -41,22 +41,33 @@ export default function CreateSessionPage() {
     // Generate session
     setLoading(true)
     try {
+      const { saveSession } = await import('@/lib/session-storage')
+      
       const res = await fetch('/api/sessions/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       })
 
-      if (res.ok) {
-        const data = await res.json()
-        router.push(`/dashboard/sessions/${data.session.id}`)
-      } else {
-        alert('Failed to generate session')
+      if (!res.ok) {
+        throw new Error('Failed to generate session')
       }
+
+      const data = await res.json()
+      
+      const session = {
+        id: Date.now().toString(),
+        ...formData,
+        plan: data.plan,
+        createdAt: new Date().toISOString(),
+        adaptations: {},
+      }
+
+      saveSession(session)
+      router.push(`/dashboard/sessions/${session.id}`)
     } catch (error) {
       console.error('Error:', error)
-      alert('Error generating session')
-    } finally {
+      alert('Error generating session: ' + (error instanceof Error ? error.message : 'Unknown error'))
       setLoading(false)
     }
   }

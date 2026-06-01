@@ -1,140 +1,94 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { getSessions, deleteSession } from '@/lib/session-storage';
 
 interface Session {
-  id: number
-  title: string
-  ageGrade: string
-  coachingTopic: string
-  sessionLength: string
-  playerCount: string
-  createdAt: string
-  seriesId?: number
+  id: string;
+  ageGrade: string;
+  topic: string;
+  sessionLength: number;
+  playerCount: number;
+  createdAt: string;
 }
 
 export default function SessionsPage() {
-  const [sessions] = useState<Session[]>([])
-  const [loading, setLoading] = useState(true)
-  const [filter, setFilter] = useState('all')
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // TODO: Fetch sessions from API
-    setLoading(false)
-  }, [])
+    const stored = getSessions();
+    setSessions(stored);
+    setLoading(false);
+  }, []);
 
-  const filteredSessions = sessions.filter(s => {
-    if (filter === 'series') return s.seriesId
-    if (filter === 'standalone') return !s.seriesId
-    return true
-  })
+  const handleDelete = (id: string) => {
+    if (confirm('Are you sure you want to delete this session?')) {
+      deleteSession(id);
+      setSessions(sessions.filter(s => s.id !== id));
+    }
+  };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-primary">My Sessions</h1>
-        <Link
-          href="/dashboard/create"
-          className="bg-accent text-primary px-6 py-2 rounded-lg font-bold hover:opacity-90"
-        >
-          + New Session
-        </Link>
-      </div>
-
-      {/* Filters */}
-      <div className="bg-white rounded-lg shadow p-4 flex gap-2">
-        <button
-          onClick={() => setFilter('all')}
-          className={`px-4 py-2 rounded-lg font-medium ${
-            filter === 'all'
-              ? 'bg-primary text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          All Sessions
-        </button>
-        <button
-          onClick={() => setFilter('series')}
-          className={`px-4 py-2 rounded-lg font-medium ${
-            filter === 'series'
-              ? 'bg-primary text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          Series
-        </button>
-        <button
-          onClick={() => setFilter('standalone')}
-          className={`px-4 py-2 rounded-lg font-medium ${
-            filter === 'standalone'
-              ? 'bg-primary text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-          }`}
-        >
-          Standalone
-        </button>
-      </div>
-
-      {/* Sessions grid */}
-      {loading ? (
-        <div className="text-center py-12">Loading sessions...</div>
-      ) : filteredSessions.length === 0 ? (
-        <div className="bg-white rounded-lg shadow p-12 text-center">
-          <div className="text-4xl mb-4">📋</div>
-          <h2 className="text-xl font-bold text-gray-700 mb-2">No sessions yet</h2>
-          <p className="text-gray-600 mb-6">
-            Create your first session to get started with RFU-informed planning.
-          </p>
+    <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="max-w-4xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">My Sessions</h1>
           <Link
             href="/dashboard/create"
-            className="inline-block bg-accent text-primary px-6 py-2 rounded-lg font-bold hover:opacity-90"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-bold"
           >
-            Create a Session
+            + New Session
           </Link>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredSessions.map(session => (
+
+        {loading ? (
+          <div className="text-center text-gray-600">Loading sessions...</div>
+        ) : sessions.length === 0 ? (
+          <div className="bg-white rounded-lg shadow p-12 text-center">
+            <p className="text-gray-600 mb-6">No sessions created yet</p>
             <Link
-              key={session.id}
-              href={`/dashboard/sessions/${session.id}`}
-              className="bg-white rounded-lg shadow p-6 hover:shadow-lg hover:border-accent border-2 border-transparent transition"
+              href="/dashboard/create"
+              className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-bold"
             >
-              <div className="flex justify-between items-start mb-3">
-                <div>
-                  <h3 className="font-bold text-lg text-primary line-clamp-2">
-                    {session.title}
-                  </h3>
-                  <p className="text-sm text-gray-600">{session.coachingTopic}</p>
-                </div>
-                {session.seriesId && (
-                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                    Series
-                  </span>
-                )}
-              </div>
-
-              <div className="flex gap-2 flex-wrap mb-4">
-                <span className="bg-primary text-white text-xs px-2 py-1 rounded">
-                  {session.ageGrade}
-                </span>
-                <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">
-                  {session.sessionLength} min
-                </span>
-                <span className="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">
-                  {session.playerCount} players
-                </span>
-              </div>
-
-              <p className="text-xs text-gray-500">
-                {new Date(session.createdAt).toLocaleDateString()}
-              </p>
+              Create Your First Session
             </Link>
-          ))}
-        </div>
-      )}
+          </div>
+        ) : (
+          <div className="grid gap-6">
+            {sessions.map(session => (
+              <div key={session.id} className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">{session.topic}</h3>
+                    <p className="text-gray-600 text-sm">
+                      {session.ageGrade} • {session.playerCount} players • {session.sessionLength} mins
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Link
+                      href={`/dashboard/sessions/${session.id}`}
+                      className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded font-semibold text-sm"
+                    >
+                      View
+                    </Link>
+                    <button
+                      onClick={() => handleDelete(session.id)}
+                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold text-sm"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+                <p className="text-gray-600 text-sm">
+                  Created {new Date(session.createdAt).toLocaleDateString()}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
-  )
+  );
 }
