@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import Link from 'next/link';
+import Image from 'next/image'
 
 interface Session {
   id: number
@@ -55,6 +56,9 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="bg-gradient-to-r from-slate-800 to-slate-700 text-white border-b border-slate-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex items-center gap-3 mb-4">
+            <Image src="/logo.png" alt="Rugby Practice Planner" width={50} height={50} className="h-12 w-auto" />
+          </div>
           <h1 className="text-4xl font-bold mb-2">Welcome to Rugby Practice Planner</h1>
           <p className="text-lg text-slate-300">Create RFU-informed, age-grade aware session plans powered by AI.</p>
         </div>

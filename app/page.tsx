@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getSessions } from '@/lib/session-storage';
 
@@ -17,9 +18,8 @@ export default function Home() {
       {/* Navigation */}
       <nav className="bg-primary border-b border-slate-800 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center text-primary font-bold">🏉</div>
-            <span className="text-lg font-bold text-white">RUGBY PRACTICE PLANNER</span>
+          <div className="flex items-center gap-2">
+            <Image src="/logo.png" alt="Rugby Practice Planner" width={40} height={40} className="h-10 w-auto" />
           </div>
           <div className="hidden md:flex gap-8">
             <a href="#home" className="text-white hover:text-accent transition">Home</a>
@@ -55,8 +55,8 @@ export default function Home() {
               <div className="relative w-full max-w-md">
                 <div className="absolute inset-0 bg-accent rounded-3xl transform -skew-y-3" style={{clipPath: 'polygon(0 0, 100% 5%, 100% 95%, 0 100%)'}}></div>
                 <div className="relative bg-slate-900 rounded-3xl p-8 text-center m-1 transform -skew-y-3" style={{clipPath: 'polygon(0 0, 100% 5%, 100% 95%, 0 100%)'}}>
-                  <div className="text-6xl mb-4">🏉</div>
-                  <p className="text-slate-300 font-semibold">AI-Powered Session Planning</p>
+              <Image src="/logo.png" alt="Rugby Practice Planner" width={80} height={80} className="h-20 w-auto mx-auto mb-4" />
+              <p className="text-slate-300 font-semibold">AI-Powered Session Planning</p>
                 </div>
               </div>
             </div>

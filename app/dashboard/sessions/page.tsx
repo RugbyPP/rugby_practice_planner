@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { getSessions, deleteSession } from '@/lib/session-storage';
 
@@ -34,7 +35,10 @@ export default function SessionsPage() {
     <div className="min-h-screen bg-primary py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-accent">My Sessions</h1>
+          <div className="flex items-center gap-3">
+            <Image src="/logo.png" alt="Rugby Practice Planner" width={40} height={40} className="h-10 w-auto" />
+            <h1 className="text-3xl font-bold text-accent">My Sessions</h1>
+          </div>
           <Link
             href="/dashboard/create"
             className="bg-accent hover:bg-lime-500 text-primary px-6 py-2 rounded-lg font-bold transition"
