@@ -24,8 +24,7 @@ export default function Home() {
           <div className="hidden md:flex gap-8">
             <a href="#home" className="text-white hover:text-accent transition">Home</a>
             <a href="#features" className="text-white hover:text-accent transition">Features</a>
-            <a href="#about" className="text-white hover:text-accent transition">About</a>
-          </div>
+                      </div>
         </div>
       </nav>
 
