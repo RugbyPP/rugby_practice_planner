@@ -17,9 +17,9 @@ export default function Home() {
       {/* Navigation */}
       <nav className="bg-primary border-b border-slate-800 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <div className="text-2xl font-bold text-white">🏉</div>
-            <span className="text-xl font-bold text-white">RUGBY PRACTICE PLANNER</span>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-accent rounded-full flex items-center justify-center text-primary font-bold">🏉</div>
+            <span className="text-lg font-bold text-white">RUGBY PRACTICE PLANNER</span>
           </div>
           <div className="hidden md:flex gap-8">
             <a href="#home" className="text-white hover:text-accent transition">Home</a>
@@ -50,11 +50,13 @@ export default function Home() {
                 Get Started <span>→</span>
               </Link>
             </div>
-            <div className="hidden md:block">
-              <div className="bg-gradient-to-br from-accent to-accent rounded-3xl p-1 transform skew-y-3">
-                <div className="bg-slate-900 rounded-3xl p-12 text-center">
+            <div className="hidden md:flex justify-center">
+              {/* Hero Image Box with Lime Border */}
+              <div className="relative w-full max-w-md">
+                <div className="absolute inset-0 bg-accent rounded-3xl transform -skew-y-3" style={{clipPath: 'polygon(0 0, 100% 5%, 100% 95%, 0 100%)'}}></div>
+                <div className="relative bg-slate-900 rounded-3xl p-8 text-center m-1 transform -skew-y-3" style={{clipPath: 'polygon(0 0, 100% 5%, 100% 95%, 0 100%)'}}>
                   <div className="text-6xl mb-4">🏉</div>
-                  <p className="text-slate-400">AI-Powered Session Planning</p>
+                  <p className="text-slate-300 font-semibold">AI-Powered Session Planning</p>
                 </div>
               </div>
             </div>
@@ -71,7 +73,7 @@ export default function Home() {
           
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             {/* Feature 1 */}
-            <div className="border border-slate-700 rounded-lg p-6 hover:border-accent transition">
+            <div className="border-2 border-accent rounded-lg p-6 hover:shadow-lg hover:shadow-accent/20 transition">
               <div className="text-4xl mb-4">📋</div>
               <h3 className="text-xl font-bold text-white mb-3">Customizable Session Plans</h3>
               <p className="text-slate-400">
@@ -80,7 +82,7 @@ export default function Home() {
             </div>
 
             {/* Feature 2 */}
-            <div className="border border-slate-700 rounded-lg p-6 hover:border-accent transition">
+            <div className="border-2 border-accent rounded-lg p-6 hover:shadow-lg hover:shadow-accent/20 transition">
               <div className="text-4xl mb-4">👥</div>
               <h3 className="text-xl font-bold text-white mb-3">Complete Coach Resources</h3>
               <p className="text-slate-400">
@@ -89,7 +91,7 @@ export default function Home() {
             </div>
 
             {/* Feature 3 */}
-            <div className="border border-slate-700 rounded-lg p-6 hover:border-accent transition">
+            <div className="border-2 border-accent rounded-lg p-6 hover:shadow-lg hover:shadow-accent/20 transition">
               <div className="text-4xl mb-4">🎯</div>
               <h3 className="text-xl font-bold text-white mb-3">RFU Principles of Play</h3>
               <p className="text-slate-400">
@@ -100,24 +102,24 @@ export default function Home() {
 
           {/* Capabilities Grid */}
           <div className="grid md:grid-cols-4 gap-6 mt-12">
-            <div className="border-l-2 border-accent pl-4">
-              <h4 className="text-accent font-bold mb-2">⏱️ Session Planning</h4>
-              <p className="text-slate-400 text-sm">Any Duration</p>
+            <div className="border-l-4 border-accent pl-4">
+              <h4 className="text-accent font-bold mb-2 text-lg">⏱️ Session Planning</h4>
+              <p className="text-slate-400 text-sm font-semibold">Any Duration</p>
               <p className="text-slate-500 text-xs mt-2">Create sessions from 15 minutes to 2+ hours.</p>
             </div>
-            <div className="border-l-2 border-accent pl-4">
-              <h4 className="text-accent font-bold mb-2">👥 Participant Flexibility</h4>
-              <p className="text-slate-400 text-sm">Scale Up or Down</p>
+            <div className="border-l-4 border-accent pl-4">
+              <h4 className="text-accent font-bold mb-2 text-lg">👥 Participant Flexibility</h4>
+              <p className="text-slate-400 text-sm font-semibold">Scale Up or Down</p>
               <p className="text-slate-500 text-xs mt-2">Adapt activities for any group size with ease.</p>
             </div>
-            <div className="border-l-2 border-accent pl-4">
-              <h4 className="text-accent font-bold mb-2">⚙️ Difficulty Adjustment</h4>
-              <p className="text-slate-400 text-sm">Easier or Harder</p>
+            <div className="border-l-4 border-accent pl-4">
+              <h4 className="text-accent font-bold mb-2 text-lg">⚙️ Difficulty Adjustment</h4>
+              <p className="text-slate-400 text-sm font-semibold">Easier or Harder</p>
               <p className="text-slate-500 text-xs mt-2">Modify activities to suit all ability levels.</p>
             </div>
-            <div className="border-l-2 border-accent pl-4">
-              <h4 className="text-accent font-bold mb-2">👨‍👩‍👧 Multi-Audience Briefs</h4>
-              <p className="text-slate-400 text-sm">Coaches, Assistants, Parents</p>
+            <div className="border-l-4 border-accent pl-4">
+              <h4 className="text-accent font-bold mb-2 text-lg">👨‍👩‍👧 Multi-Audience Briefs</h4>
+              <p className="text-slate-400 text-sm font-semibold">Coaches, Assistants, Parents</p>
               <p className="text-slate-500 text-xs mt-2">Clear, tailored briefs for every audience.</p>
             </div>
           </div>
