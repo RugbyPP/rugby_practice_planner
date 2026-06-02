@@ -37,6 +37,7 @@ export default function SessionPage() {
   const [adaptedPlan, setAdaptedPlan] = useState<string | null>(null)
   const [adaptingType, setAdaptingType] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
+  const [copyFeedback, setCopyFeedback] = useState<string | null>(null)
 
   useEffect(() => {
     const stored = getSession(sessionId)
@@ -59,13 +60,13 @@ export default function SessionPage() {
           adaptationType,
           planMarkdown: session.plan,
           ageGrade: session.ageGrade,
-          gender: 'mixed', // Default value - can be enhanced later
+          gender: 'mixed',
           playerCount: session.playerCount,
-          abilityLevel: 'intermediate', // Default value - can be enhanced later
+          abilityLevel: 'intermediate',
           sessionLength: session.sessionLength,
           topic: session.topic,
-          principle: 'development', // Default value - can be enhanced later
-          contactLevel: 'full', // Default value - can be enhanced later
+          principle: 'development',
+          contactLevel: 'full',
         }),
       })
 
@@ -84,25 +85,30 @@ export default function SessionPage() {
     }
   }
 
-  const handleCopy = () => {
+  const handleCopy = async () => {
     const text = adaptedPlan || session?.plan
     if (text) {
-      navigator.clipboard.writeText(text)
-      alert('Copied to clipboard!')
+      try {
+        await navigator.clipboard.writeText(text)
+        setCopyFeedback('✓ Copied to clipboard!')
+        setTimeout(() => setCopyFeedback(null), 2000)
+      } catch (err) {
+        console.error('Copy failed:', err)
+        setCopyFeedback('✗ Copy failed')
+        setTimeout(() => setCopyFeedback(null), 2000)
+      }
     }
   }
 
-
-
   if (loading) {
-    return <div className="text-center py-12">Loading session...</div>
+    return <div className="text-center py-12 text-slate-400">Loading session...</div>
   }
 
   if (!session) {
     return (
       <div className="text-center py-12">
-        <p className="text-red-600 mb-4">Session not found</p>
-        <Link href="/dashboard/sessions" className="text-indigo-600 hover:underline">
+        <p className="text-red-400 mb-4">Session not found</p>
+        <Link href="/dashboard/sessions" className="text-lime-400 hover:text-lime-300 transition">
           Back to Sessions
         </Link>
       </div>
@@ -114,18 +120,18 @@ export default function SessionPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6">
         <div className="flex justify-between items-start mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-indigo-600 mb-2">{session.topic}</h1>
+            <h1 className="text-3xl font-bold text-lime-400 mb-2">{session.topic}</h1>
             <div className="flex gap-2 flex-wrap">
-              <span className="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm font-bold">
+              <span className="bg-lime-400 text-slate-950 px-3 py-1 rounded-full text-sm font-bold">
                 {session.ageGrade}
               </span>
-              <span className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm">
+              <span className="bg-slate-800 text-slate-300 px-3 py-1 rounded-full text-sm border border-slate-700">
                 {session.sessionLength} min
               </span>
-              <span className="bg-gray-200 text-gray-800 px-3 py-1 rounded-full text-sm">
+              <span className="bg-slate-800 text-slate-300 px-3 py-1 rounded-full text-sm border border-slate-700">
                 {session.playerCount} players
               </span>
             </div>
@@ -133,17 +139,20 @@ export default function SessionPage() {
           <div className="flex gap-2">
             <button
               onClick={handleCopy}
-              className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium"
+              className="px-4 py-2 bg-lime-400 hover:bg-lime-500 text-slate-950 rounded-lg font-medium transition flex items-center gap-2"
             >
-              📋 Copy
+              📋 {copyFeedback || 'Copy'}
             </button>
           </div>
         </div>
+        {copyFeedback && (
+          <p className="text-sm text-lime-400 mt-2">{copyFeedback}</p>
+        )}
       </div>
 
       {/* Adaptation buttons */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-xl font-bold text-indigo-600 mb-4">Adapt this session</h2>
+      <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6">
+        <h2 className="text-xl font-bold text-lime-400 mb-4">Adapt this session</h2>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
           {ADAPTATIONS.map(adapt => (
             <button
@@ -152,8 +161,8 @@ export default function SessionPage() {
               disabled={adaptingType === adapt.id}
               className={`p-3 rounded-lg font-medium text-sm transition ${
                 adaptingType === adapt.id
-                  ? 'bg-gray-300 text-gray-700 opacity-50'
-                  : 'bg-indigo-100 text-indigo-900 hover:bg-indigo-200'
+                  ? 'bg-slate-700 text-slate-400 opacity-50 cursor-not-allowed'
+                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-lime-400 border border-slate-700'
               }`}
             >
               {adaptingType === adapt.id ? '⏳' : adapt.label}
@@ -163,16 +172,32 @@ export default function SessionPage() {
       </div>
 
       {/* Session plan */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <div className="prose prose-sm max-w-none">
-          <ReactMarkdown>{displayPlan}</ReactMarkdown>
+      <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6">
+        <div className="prose prose-invert max-w-none prose-headings:text-lime-400 prose-headings:font-bold prose-p:text-slate-300 prose-p:leading-relaxed prose-li:text-slate-300 prose-li:leading-relaxed prose-strong:text-lime-300 prose-em:text-slate-200 prose-code:text-lime-300 prose-code:bg-slate-800 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-hr:border-slate-700 prose-blockquote:text-slate-400 prose-blockquote:border-lime-400">
+          <ReactMarkdown
+            components={{
+              h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-lime-400 mt-6 mb-4" {...props} />,
+              h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-lime-400 mt-5 mb-3" {...props} />,
+              h3: ({node, ...props}) => <h3 className="text-xl font-bold text-lime-300 mt-4 mb-2" {...props} />,
+              p: ({node, ...props}) => <p className="text-slate-300 mb-4 leading-relaxed" {...props} />,
+              ul: ({node, ...props}) => <ul className="list-disc list-inside text-slate-300 mb-4 space-y-2" {...props} />,
+              ol: ({node, ...props}) => <ol className="list-decimal list-inside text-slate-300 mb-4 space-y-2" {...props} />,
+              li: ({node, ...props}) => <li className="text-slate-300 ml-2" {...props} />,
+              blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-lime-400 pl-4 py-2 my-4 text-slate-400 italic" {...props} />,
+              code: ({node, ...props}) => <code className="bg-slate-800 text-lime-300 px-2 py-1 rounded text-sm" {...props} />,
+              pre: ({node, ...props}) => <pre className="bg-slate-800 text-lime-300 p-4 rounded-lg overflow-x-auto mb-4" {...props} />,
+              hr: ({node, ...props}) => <hr className="border-slate-700 my-6" {...props} />,
+            }}
+          >
+            {displayPlan}
+          </ReactMarkdown>
         </div>
       </div>
 
       {/* Coach responsibility note */}
-      <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
-        <p className="font-bold text-yellow-900 mb-2">Coach Responsibility Note</p>
-        <p className="text-sm text-yellow-800">
+      <div className="bg-yellow-900/20 border-l-4 border-yellow-400 p-4 rounded">
+        <p className="font-bold text-yellow-400 mb-2">Coach Responsibility Note</p>
+        <p className="text-sm text-yellow-300">
           This session is RFU-informed planning support. Coaches remain responsible for checking current RFU regulations, safeguarding requirements, first aid provision, venue risk assessments, player readiness, coaching competence and session suitability before delivery.
         </p>
       </div>

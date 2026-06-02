@@ -13,89 +13,161 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            Rugby Practice Planner
-          </h1>
-          <p className="text-xl text-gray-600 mb-8">
-            AI-powered session planning for rugby coaches
-          </p>
-        </div>
-
-        <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8 mb-12">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Create Your First Session
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Generate AI-powered rugby session plans tailored to your teams needs
-            </p>
-            <Link
-              href="/dashboard/create"
-              className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-lg transition"
-            >
-              Get Started
-            </Link>
+    <div className="min-h-screen bg-slate-950">
+      {/* Navigation */}
+      <nav className="bg-slate-950 border-b border-slate-800 sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <div className="text-2xl font-bold text-white">🏉</div>
+            <span className="text-xl font-bold text-white">RUGBY PRACTICE PLANNER</span>
+          </div>
+          <div className="hidden md:flex gap-8">
+            <a href="#home" className="text-white hover:text-lime-400 transition">Home</a>
+            <a href="#features" className="text-white hover:text-lime-400 transition">Features</a>
+            <a href="#about" className="text-white hover:text-lime-400 transition">About</a>
           </div>
         </div>
+      </nav>
 
-        <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-6 mb-12">
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="text-3xl mb-3">🤖</div>
-            <h3 className="font-bold text-lg mb-2">AI Generation</h3>
-            <p className="text-gray-600 text-sm">
-              Claude 3.5 Sonnet generates session plans based on your teams needs
-            </p>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="text-3xl mb-3">🔄</div>
-            <h3 className="font-bold text-lg mb-2">10 Adaptations</h3>
-            <p className="text-gray-600 text-sm">
-              Instantly adapt sessions for different contexts and player needs
-            </p>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="text-3xl mb-3">💾</div>
-            <h3 className="font-bold text-lg mb-2">Local Storage</h3>
-            <p className="text-gray-600 text-sm">
-              All sessions saved locally in your browser
-            </p>
+      {/* Hero Section */}
+      <section className="bg-slate-950 py-20">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+                RFU-Aligned<br />
+                <span className="text-lime-400">Coaching Sessions</span>
+              </h1>
+              <div className="w-24 h-1 bg-lime-400 mb-6"></div>
+              <p className="text-xl text-slate-300 mb-8">
+                Age-Grade Specific Training<br />
+                for Every Ability Level
+              </p>
+              <Link
+                href="/dashboard/create"
+                className="inline-flex items-center gap-2 bg-lime-400 hover:bg-lime-500 text-slate-950 font-bold py-3 px-8 rounded-lg transition transform hover:scale-105"
+              >
+                Get Started <span>→</span>
+              </Link>
+            </div>
+            <div className="hidden md:block">
+              <div className="bg-gradient-to-br from-lime-400 to-lime-500 rounded-3xl p-1 transform skew-y-3">
+                <div className="bg-slate-900 rounded-3xl p-12 text-center">
+                  <div className="text-6xl mb-4">🏉</div>
+                  <p className="text-slate-400">AI-Powered Session Planning</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+      </section>
 
-        {sessionCount > 0 && (
-          <div className="max-w-2xl mx-auto bg-indigo-50 border border-indigo-200 rounded-lg p-6 text-center">
-            <p className="text-gray-700">
-              You have <span className="font-bold text-indigo-600">{sessionCount}</span> saved session{sessionCount !== 1 ? 's' : ''}
+      {/* Features Section */}
+      <section id="features" className="bg-slate-900 py-20 border-t border-slate-800">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-white text-center mb-16">
+            Powerful Capabilities
+          </h2>
+          
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            {/* Feature 1 */}
+            <div className="border border-slate-700 rounded-lg p-6 hover:border-lime-400 transition">
+              <div className="text-4xl mb-4">📋</div>
+              <h3 className="text-xl font-bold text-white mb-3">Customizable Session Plans</h3>
+              <p className="text-slate-400">
+                Any length, development, and skill level.
+              </p>
+            </div>
+
+            {/* Feature 2 */}
+            <div className="border border-slate-700 rounded-lg p-6 hover:border-lime-400 transition">
+              <div className="text-4xl mb-4">👥</div>
+              <h3 className="text-xl font-bold text-white mb-3">Complete Coach Resources</h3>
+              <p className="text-slate-400">
+                Assistant briefs, parent briefs, and difficulty adjustments.
+              </p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="border border-slate-700 rounded-lg p-6 hover:border-lime-400 transition">
+              <div className="text-4xl mb-4">🎯</div>
+              <h3 className="text-xl font-bold text-white mb-3">RFU Principles of Play</h3>
+              <p className="text-slate-400">
+                Aligned with official rugby coaching standards.
+              </p>
+            </div>
+          </div>
+
+          {/* Capabilities Grid */}
+          <div className="grid md:grid-cols-4 gap-6 mt-12">
+            <div className="border-l-2 border-lime-400 pl-4">
+              <h4 className="text-lime-400 font-bold mb-2">⏱️ Session Planning</h4>
+              <p className="text-slate-400 text-sm">Any Duration</p>
+              <p className="text-slate-500 text-xs mt-2">Create sessions from 15 minutes to 2+ hours.</p>
+            </div>
+            <div className="border-l-2 border-lime-400 pl-4">
+              <h4 className="text-lime-400 font-bold mb-2">👥 Participant Flexibility</h4>
+              <p className="text-slate-400 text-sm">Scale Up or Down</p>
+              <p className="text-slate-500 text-xs mt-2">Adapt activities for any group size with ease.</p>
+            </div>
+            <div className="border-l-2 border-lime-400 pl-4">
+              <h4 className="text-lime-400 font-bold mb-2">⚙️ Difficulty Adjustment</h4>
+              <p className="text-slate-400 text-sm">Easier or Harder</p>
+              <p className="text-slate-500 text-xs mt-2">Modify activities to suit all ability levels.</p>
+            </div>
+            <div className="border-l-2 border-lime-400 pl-4">
+              <h4 className="text-lime-400 font-bold mb-2">👨‍👩‍👧 Multi-Audience Briefs</h4>
+              <p className="text-slate-400 text-sm">Coaches, Assistants, Parents</p>
+              <p className="text-slate-500 text-xs mt-2">Clear, tailored briefs for every audience.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Sessions Info */}
+      {sessionCount > 0 && (
+        <section className="bg-slate-950 py-12 border-t border-slate-800">
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-slate-300 text-lg mb-4">
+              You have <span className="text-lime-400 font-bold">{sessionCount}</span> saved session{sessionCount !== 1 ? 's' : ''}
             </p>
             <Link
               href="/dashboard/sessions"
-              className="inline-block mt-4 text-indigo-600 hover:text-indigo-700 font-semibold"
+              className="inline-block text-lime-400 hover:text-lime-300 font-semibold transition"
             >
-              View Your Sessions
+              View Your Sessions →
             </Link>
           </div>
-        )}
+        </section>
+      )}
 
-        <div className="max-w-2xl mx-auto mt-12 text-center">
-          <Link
-            href="/dashboard/sessions"
-            className="inline-block mr-6 text-indigo-600 hover:text-indigo-700 font-semibold"
-          >
-            Session Library
-          </Link>
-          <Link
-            href="/dashboard/create"
-            className="inline-block text-indigo-600 hover:text-indigo-700 font-semibold"
-          >
-            Create New Session
-          </Link>
+      {/* CTA Section */}
+      <section className="bg-slate-900 py-16 border-t border-slate-800">
+        <div className="container mx-auto px-4 text-center">
+          <h3 className="text-3xl font-bold text-white mb-8">Ready to create better sessions?</h3>
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <Link
+              href="/dashboard/create"
+              className="inline-flex items-center justify-center gap-2 bg-lime-400 hover:bg-lime-500 text-slate-950 font-bold py-3 px-8 rounded-lg transition"
+            >
+              Create New Session
+            </Link>
+            <Link
+              href="/dashboard/sessions"
+              className="inline-flex items-center justify-center gap-2 border-2 border-lime-400 text-lime-400 hover:bg-lime-400 hover:text-slate-950 font-bold py-3 px-8 rounded-lg transition"
+            >
+              View Sessions
+            </Link>
+          </div>
         </div>
-      </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-slate-950 border-t border-slate-800 py-8">
+        <div className="container mx-auto px-4 text-center text-slate-500">
+          <p>Rugby Practice Planner • Better Coaching. Better Players. Better Game.</p>
+        </div>
+      </footer>
     </div>
   );
 }

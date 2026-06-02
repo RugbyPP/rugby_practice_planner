@@ -18,17 +18,17 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-950">
       {/* Header */}
-      <header className="bg-primary text-white shadow">
+      <header className="bg-slate-950 text-white shadow border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <Link href="/dashboard" className="text-2xl font-bold">
-            🏉 Rugby Planner
+            🏉 <span className="text-lime-400">Rugby Planner</span>
           </Link>
           <div className="flex items-center gap-4">
             <button
               onClick={() => setShowMenu(!showMenu)}
-              className="p-2 hover:bg-primary/80 rounded"
+              className="p-2 hover:bg-slate-800 rounded transition"
             >
               ☰
             </button>
@@ -37,29 +37,29 @@ export default function DashboardLayout({
 
         {/* Mobile menu */}
         {showMenu && (
-          <div className="bg-primary/95 border-t border-white/20">
+          <div className="bg-slate-900 border-t border-slate-700">
             <div className="max-w-7xl mx-auto px-4 py-4 space-y-2">
               <Link
                 href="/dashboard"
-                className="block px-4 py-2 hover:bg-white/10 rounded"
+                className="block px-4 py-2 hover:bg-slate-800 rounded transition text-slate-300 hover:text-lime-400"
               >
                 Dashboard
               </Link>
               <Link
                 href="/dashboard/sessions"
-                className="block px-4 py-2 hover:bg-white/10 rounded"
+                className="block px-4 py-2 hover:bg-slate-800 rounded transition text-slate-300 hover:text-lime-400"
               >
                 My Sessions
               </Link>
               <Link
                 href="/dashboard/create"
-                className="block px-4 py-2 hover:bg-white/10 rounded"
+                className="block px-4 py-2 hover:bg-slate-800 rounded transition text-slate-300 hover:text-lime-400"
               >
                 Create Session
               </Link>
               <button
                 onClick={handleLogout}
-                className="w-full text-left px-4 py-2 hover:bg-white/10 rounded text-red-300"
+                className="w-full text-left px-4 py-2 hover:bg-slate-800 rounded transition text-red-400 hover:text-red-300"
               >
                 Sign Out
               </button>
@@ -69,21 +69,21 @@ export default function DashboardLayout({
       </header>
 
       {/* Desktop navigation */}
-      <div className="hidden md:block bg-white border-b">
+      <div className="hidden md:block bg-slate-900 border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex gap-8 py-4">
-            <Link href="/dashboard" className="text-primary font-medium hover:text-accent">
+            <Link href="/dashboard" className="text-lime-400 font-medium hover:text-lime-300 transition">
               Dashboard
             </Link>
-            <Link href="/dashboard/sessions" className="text-gray-600 hover:text-primary">
+            <Link href="/dashboard/sessions" className="text-slate-400 hover:text-lime-400 transition">
               My Sessions
             </Link>
-            <Link href="/dashboard/create" className="text-gray-600 hover:text-primary">
+            <Link href="/dashboard/create" className="text-slate-400 hover:text-lime-400 transition">
               Create Session
             </Link>
             <button
               onClick={handleLogout}
-              className="ml-auto text-gray-600 hover:text-red-600"
+              className="ml-auto text-slate-400 hover:text-red-400 transition"
             >
               Sign Out
             </button>

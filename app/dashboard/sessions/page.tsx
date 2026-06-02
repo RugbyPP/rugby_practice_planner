@@ -31,26 +31,26 @@ export default function SessionsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
+    <div className="min-h-screen bg-slate-950 py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">My Sessions</h1>
+          <h1 className="text-3xl font-bold text-lime-400">My Sessions</h1>
           <Link
             href="/dashboard/create"
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-bold"
+            className="bg-lime-400 hover:bg-lime-500 text-slate-950 px-6 py-2 rounded-lg font-bold transition"
           >
             + New Session
           </Link>
         </div>
 
         {loading ? (
-          <div className="text-center text-gray-600">Loading sessions...</div>
+          <div className="text-center text-slate-400">Loading sessions...</div>
         ) : sessions.length === 0 ? (
-          <div className="bg-white rounded-lg shadow p-12 text-center">
-            <p className="text-gray-600 mb-6">No sessions created yet</p>
+          <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-12 text-center">
+            <p className="text-slate-400 mb-6">No sessions created yet</p>
             <Link
               href="/dashboard/create"
-              className="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-bold"
+              className="inline-block bg-lime-400 hover:bg-lime-500 text-slate-950 px-6 py-2 rounded-lg font-bold transition"
             >
               Create Your First Session
             </Link>
@@ -58,30 +58,30 @@ export default function SessionsPage() {
         ) : (
           <div className="grid gap-6">
             {sessions.map(session => (
-              <div key={session.id} className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
+              <div key={session.id} className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6 hover:border-lime-400 transition">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900">{session.topic}</h3>
-                    <p className="text-gray-600 text-sm">
+                    <h3 className="text-xl font-bold text-lime-400">{session.topic}</h3>
+                    <p className="text-slate-400 text-sm">
                       {session.ageGrade} • {session.playerCount} players • {session.sessionLength} mins
                     </p>
                   </div>
                   <div className="flex gap-2">
                     <Link
                       href={`/dashboard/sessions/${session.id}`}
-                      className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded font-semibold text-sm"
+                      className="bg-lime-400 hover:bg-lime-500 text-slate-950 px-4 py-2 rounded font-semibold text-sm transition"
                     >
                       View
                     </Link>
                     <button
                       onClick={() => handleDelete(session.id)}
-                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold text-sm"
+                      className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold text-sm transition"
                     >
                       Delete
                     </button>
                   </div>
                 </div>
-                <p className="text-gray-600 text-sm">
+                <p className="text-slate-500 text-sm">
                   Created {new Date(session.createdAt).toLocaleDateString()}
                 </p>
               </div>
