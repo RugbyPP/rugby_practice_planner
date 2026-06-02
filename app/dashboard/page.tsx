@@ -60,7 +60,7 @@ export default function DashboardPage() {
             <Image src="/logo.png" alt="Rugby Practice Planner" width={100} height={100} className="h-40 w-auto" />
           </div>
           <h1 className="text-4xl font-bold mb-2">Welcome to Rugby Practice Planner</h1>
-          <p className="text-lg text-slate-300">Create RFU-informed, age-grade aware session plans powered by AI.</p>
+          <p className="text-lg text-slate-300">Create RFU-informed, age-grade aware session plans.</p>
         </div>
       </div>
 
