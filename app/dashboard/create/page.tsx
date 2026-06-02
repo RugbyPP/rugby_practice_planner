@@ -76,7 +76,7 @@ export default function CreateSessionPage() {
     (formData.ageGrade.includes('7') || formData.ageGrade.includes('8'))
 
   return (
-    <div className="min-h-screen bg-slate-950 py-8">
+    <div className="min-h-screen bg-primary py-8">
       <div className="max-w-2xl mx-auto px-4">
         <div className="bg-slate-900 rounded-lg shadow border border-slate-800">
           {/* Header */}
@@ -92,7 +92,7 @@ export default function CreateSessionPage() {
 
           {/* Progress Bar */}
           <div className="h-1 bg-slate-700">
-            <div className="h-full bg-lime-400 transition-all" style={{ width: `${(step / 4) * 100}%` }} />
+            <div className="h-full bg-accent transition-all" style={{ width: `${(step / 4) * 100}%` }} />
           </div>
 
           {/* Form */}
@@ -108,7 +108,7 @@ export default function CreateSessionPage() {
                     name="ageGrade"
                     value={formData.ageGrade}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400"
+                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                   >
                     <option>Under 7</option>
                     <option>Under 8</option>
@@ -134,7 +134,7 @@ export default function CreateSessionPage() {
                       name="gender"
                       value={formData.gender}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400"
+                      className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                     >
                       <option>Boys</option>
                       <option>Girls</option>
@@ -152,7 +152,7 @@ export default function CreateSessionPage() {
                       value={formData.playerCount}
                       onChange={handleChange}
                       min="1"
-                      className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400"
+                      className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                     />
                   </div>
                 </div>
@@ -165,7 +165,7 @@ export default function CreateSessionPage() {
                     name="abilityLevel"
                     value={formData.abilityLevel}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400"
+                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                   >
                     <option>Beginner</option>
                     <option>Mixed</option>
@@ -188,7 +188,7 @@ export default function CreateSessionPage() {
                     value={formData.topic}
                     onChange={handleChange}
                     placeholder="e.g., Passing & Catching, Tackling, Ruck & Maul"
-                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400"
+                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                 </div>
 
@@ -200,7 +200,7 @@ export default function CreateSessionPage() {
                     name="principle"
                     value={formData.principle}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400"
+                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                   >
                     <option>Support</option>
                     <option>Communication</option>
@@ -223,7 +223,7 @@ export default function CreateSessionPage() {
                       onChange={handleChange}
                       min="30"
                       max="120"
-                      className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400"
+                      className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                     />
                   </div>
                 </div>
@@ -238,7 +238,7 @@ export default function CreateSessionPage() {
                     onChange={handleChange}
                     placeholder="e.g., Players struggle with support play, decision-making under pressure"
                     rows={3}
-                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400"
+                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                 </div>
 
@@ -252,7 +252,7 @@ export default function CreateSessionPage() {
                     onChange={handleChange}
                     placeholder="e.g., Players will execute accurate passes and recognize support opportunities"
                     rows={3}
-                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400"
+                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                 </div>
               </>
@@ -269,7 +269,7 @@ export default function CreateSessionPage() {
                     name="contactLevel"
                     value={formData.contactLevel}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400"
+                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                   >
                     <option value="no_contact">No Contact (Touch Only)</option>
                     <option value="touch_only">Touch Only</option>
@@ -298,7 +298,7 @@ export default function CreateSessionPage() {
                     onChange={handleChange}
                     placeholder="e.g., Cones, bibs, tackle pads, balls"
                     rows={2}
-                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400"
+                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                   />
                 </div>
 
@@ -310,7 +310,7 @@ export default function CreateSessionPage() {
                     name="space"
                     value={formData.space}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-400"
+                    className="w-full px-4 py-2 border border-slate-600 bg-slate-800 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
                   >
                     <option>Full pitch</option>
                     <option>Half pitch</option>
@@ -326,7 +326,7 @@ export default function CreateSessionPage() {
             {step === 4 && (
               <div className="space-y-4">
                 <div className="bg-slate-800 border border-slate-700 p-4 rounded-lg">
-                  <h3 className="font-bold text-lime-400 mb-3">Session Summary</h3>
+                  <h3 className="font-bold text-accent mb-3">Session Summary</h3>
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
                       <span className="text-slate-400">Age Grade:</span>
@@ -377,7 +377,7 @@ export default function CreateSessionPage() {
               <button
                 type="submit"
                 disabled={loading || (step === 2 && !formData.topic)}
-                className="ml-auto px-6 py-2 bg-lime-400 text-slate-950 rounded-lg font-bold hover:bg-lime-500 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                className="ml-auto px-6 py-2 bg-accent text-primary rounded-lg font-bold hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition"
               >
                 {loading ? 'Generating...' : step === 4 ? 'Generate Session' : 'Next →'}
               </button>

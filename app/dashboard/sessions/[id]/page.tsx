@@ -108,7 +108,7 @@ export default function SessionPage() {
     return (
       <div className="text-center py-12">
         <p className="text-red-400 mb-4">Session not found</p>
-        <Link href="/dashboard/sessions" className="text-lime-400 hover:text-lime-300 transition">
+        <Link href="/dashboard/sessions" className="text-accent hover:text-lime-300 transition">
           Back to Sessions
         </Link>
       </div>
@@ -123,9 +123,9 @@ export default function SessionPage() {
       <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6">
         <div className="flex justify-between items-start mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-lime-400 mb-2">{session.topic}</h1>
+            <h1 className="text-3xl font-bold text-accent mb-2">{session.topic}</h1>
             <div className="flex gap-2 flex-wrap">
-              <span className="bg-lime-400 text-slate-950 px-3 py-1 rounded-full text-sm font-bold">
+              <span className="bg-accent text-primary px-3 py-1 rounded-full text-sm font-bold">
                 {session.ageGrade}
               </span>
               <span className="bg-slate-800 text-slate-300 px-3 py-1 rounded-full text-sm border border-slate-700">
@@ -139,20 +139,20 @@ export default function SessionPage() {
           <div className="flex gap-2">
             <button
               onClick={handleCopy}
-              className="px-4 py-2 bg-lime-400 hover:bg-lime-500 text-slate-950 rounded-lg font-medium transition flex items-center gap-2"
+              className="px-4 py-2 bg-accent hover:bg-lime-500 text-primary rounded-lg font-medium transition flex items-center gap-2"
             >
               📋 {copyFeedback || 'Copy'}
             </button>
           </div>
         </div>
         {copyFeedback && (
-          <p className="text-sm text-lime-400 mt-2">{copyFeedback}</p>
+          <p className="text-sm text-accent mt-2">{copyFeedback}</p>
         )}
       </div>
 
       {/* Adaptation buttons */}
       <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6">
-        <h2 className="text-xl font-bold text-lime-400 mb-4">Adapt this session</h2>
+        <h2 className="text-xl font-bold text-accent mb-4">Adapt this session</h2>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
           {ADAPTATIONS.map(adapt => (
             <button
@@ -162,7 +162,7 @@ export default function SessionPage() {
               className={`p-3 rounded-lg font-medium text-sm transition ${
                 adaptingType === adapt.id
                   ? 'bg-slate-700 text-slate-400 opacity-50 cursor-not-allowed'
-                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-lime-400 border border-slate-700'
+                  : 'bg-slate-800 text-slate-300 hover:bg-slate-700 hover:text-accent border border-slate-700'
               }`}
             >
               {adaptingType === adapt.id ? '⏳' : adapt.label}
@@ -173,11 +173,11 @@ export default function SessionPage() {
 
       {/* Session plan */}
       <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6">
-        <div className="prose prose-invert max-w-none prose-headings:text-lime-400 prose-headings:font-bold prose-p:text-slate-300 prose-p:leading-relaxed prose-li:text-slate-300 prose-li:leading-relaxed prose-strong:text-lime-300 prose-em:text-slate-200 prose-code:text-lime-300 prose-code:bg-slate-800 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-hr:border-slate-700 prose-blockquote:text-slate-400 prose-blockquote:border-lime-400">
+        <div className="prose prose-invert max-w-none prose-headings:text-accent prose-headings:font-bold prose-p:text-slate-300 prose-p:leading-relaxed prose-li:text-slate-300 prose-li:leading-relaxed prose-strong:text-lime-300 prose-em:text-slate-200 prose-code:text-lime-300 prose-code:bg-slate-800 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-hr:border-slate-700 prose-blockquote:text-slate-400 prose-blockquote:border-lime-400">
           <ReactMarkdown
             components={{
-              h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-lime-400 mt-6 mb-4" {...props} />,
-              h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-lime-400 mt-5 mb-3" {...props} />,
+              h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-accent mt-6 mb-4" {...props} />,
+              h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-accent mt-5 mb-3" {...props} />,
               h3: ({node, ...props}) => <h3 className="text-xl font-bold text-lime-300 mt-4 mb-2" {...props} />,
               p: ({node, ...props}) => <p className="text-slate-300 mb-4 leading-relaxed" {...props} />,
               ul: ({node, ...props}) => <ul className="list-disc list-inside text-slate-300 mb-4 space-y-2" {...props} />,

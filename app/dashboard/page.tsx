@@ -51,7 +51,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-primary">
       {/* Header */}
       <div className="bg-gradient-to-r from-slate-800 to-slate-700 text-white border-b border-slate-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -66,7 +66,7 @@ export default function DashboardPage() {
         <div className="mb-12">
           <Link
             href="/dashboard/create"
-            className="inline-block bg-lime-400 hover:bg-lime-500 text-slate-950 px-8 py-4 rounded-lg font-bold text-lg transition"
+            className="inline-block bg-accent hover:bg-lime-500 text-primary px-8 py-4 rounded-lg font-bold text-lg transition"
           >
             + Create a New Session
           </Link>
@@ -75,15 +75,15 @@ export default function DashboardPage() {
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6">
-            <div className="text-4xl font-bold text-lime-400 mb-2">{stats.totalSessions}</div>
+            <div className="text-4xl font-bold text-accent mb-2">{stats.totalSessions}</div>
             <div className="text-slate-400">Sessions Created</div>
           </div>
           <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6">
-            <div className="text-4xl font-bold text-lime-400 mb-2">{stats.totalHours}</div>
+            <div className="text-4xl font-bold text-accent mb-2">{stats.totalHours}</div>
             <div className="text-slate-400">Total Hours Planned</div>
           </div>
           <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6">
-            <div className="text-4xl font-bold text-lime-400 mb-2">{stats.totalPlayers}</div>
+            <div className="text-4xl font-bold text-accent mb-2">{stats.totalPlayers}</div>
             <div className="text-slate-400">Total Players Coached</div>
           </div>
         </div>
@@ -91,7 +91,7 @@ export default function DashboardPage() {
         {/* Recent Sessions */}
         <div className="bg-slate-900 rounded-lg shadow border border-slate-800">
           <div className="p-6 border-b border-slate-700">
-            <h2 className="text-2xl font-bold text-lime-400">Recent Sessions</h2>
+            <h2 className="text-2xl font-bold text-accent">Recent Sessions</h2>
           </div>
           
           {loading ? (
@@ -101,7 +101,7 @@ export default function DashboardPage() {
               <p className="text-slate-400 mb-4">No sessions yet. Create your first session to get started!</p>
               <Link
                 href="/dashboard/create"
-                className="inline-block bg-lime-400 hover:bg-lime-500 text-slate-950 px-6 py-2 rounded-lg font-bold transition"
+                className="inline-block bg-accent hover:bg-lime-500 text-primary px-6 py-2 rounded-lg font-bold transition"
               >
                 Create Session
               </Link>
@@ -115,14 +115,14 @@ export default function DashboardPage() {
                   className="p-6 hover:bg-slate-800 transition flex justify-between items-center border-slate-700"
                 >
                   <div>
-                    <h3 className="font-bold text-lg text-lime-400">{session.ageGrade} — {session.topic}</h3>
+                    <h3 className="font-bold text-lg text-accent">{session.ageGrade} — {session.topic}</h3>
                     <div className="flex gap-3 mt-2 text-sm text-slate-400">
                       <span>📅 {new Date(session.createdAt).toLocaleDateString()}</span>
                       <span>⏱️ {session.sessionLength} min</span>
                       <span>👥 {session.playerCount} players</span>
                     </div>
                   </div>
-                  <div className="text-lime-400 font-bold">→</div>
+                  <div className="text-accent font-bold">→</div>
                 </Link>
               ))}
             </div>
@@ -133,21 +133,21 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
           <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6 hover:border-lime-400 transition">
             <div className="text-3xl mb-3">🎯</div>
-            <h3 className="font-bold text-lg text-lime-400 mb-2">Full Session Plans</h3>
+            <h3 className="font-bold text-lg text-accent mb-2">Full Session Plans</h3>
             <p className="text-slate-400 text-sm">
               Timed plans with Game Zone, Skill Zone, coaching points and player questions.
             </p>
           </div>
           <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6 hover:border-lime-400 transition">
             <div className="text-3xl mb-3">📈</div>
-            <h3 className="font-bold text-lg text-lime-400 mb-2">Progression Tracking</h3>
+            <h3 className="font-bold text-lg text-accent mb-2">Progression Tracking</h3>
             <p className="text-slate-400 text-sm">
               Build multi-session series and track progression through your coaching block.
             </p>
           </div>
           <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6 hover:border-lime-400 transition">
             <div className="text-3xl mb-3">⚙️</div>
-            <h3 className="font-bold text-lg text-lime-400 mb-2">Instant Adaptations</h3>
+            <h3 className="font-bold text-lg text-accent mb-2">Instant Adaptations</h3>
             <p className="text-slate-400 text-sm">
               One tap to create pitch-side cards, parent summaries, or easier/harder versions.
             </p>

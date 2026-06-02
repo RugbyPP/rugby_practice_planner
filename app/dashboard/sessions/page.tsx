@@ -31,13 +31,13 @@ export default function SessionsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 py-12 px-4">
+    <div className="min-h-screen bg-primary py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-lime-400">My Sessions</h1>
+          <h1 className="text-3xl font-bold text-accent">My Sessions</h1>
           <Link
             href="/dashboard/create"
-            className="bg-lime-400 hover:bg-lime-500 text-slate-950 px-6 py-2 rounded-lg font-bold transition"
+            className="bg-accent hover:bg-lime-500 text-primary px-6 py-2 rounded-lg font-bold transition"
           >
             + New Session
           </Link>
@@ -50,7 +50,7 @@ export default function SessionsPage() {
             <p className="text-slate-400 mb-6">No sessions created yet</p>
             <Link
               href="/dashboard/create"
-              className="inline-block bg-lime-400 hover:bg-lime-500 text-slate-950 px-6 py-2 rounded-lg font-bold transition"
+              className="inline-block bg-accent hover:bg-lime-500 text-primary px-6 py-2 rounded-lg font-bold transition"
             >
               Create Your First Session
             </Link>
@@ -61,7 +61,7 @@ export default function SessionsPage() {
               <div key={session.id} className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6 hover:border-lime-400 transition">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-xl font-bold text-lime-400">{session.topic}</h3>
+                    <h3 className="text-xl font-bold text-accent">{session.topic}</h3>
                     <p className="text-slate-400 text-sm">
                       {session.ageGrade} • {session.playerCount} players • {session.sessionLength} mins
                     </p>
@@ -69,7 +69,7 @@ export default function SessionsPage() {
                   <div className="flex gap-2">
                     <Link
                       href={`/dashboard/sessions/${session.id}`}
-                      className="bg-lime-400 hover:bg-lime-500 text-slate-950 px-4 py-2 rounded font-semibold text-sm transition"
+                      className="bg-accent hover:bg-lime-500 text-primary px-4 py-2 rounded font-semibold text-sm transition"
                     >
                       View
                     </Link>
