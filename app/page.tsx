@@ -19,7 +19,7 @@ export default function Home() {
       <nav className="bg-primary border-b border-slate-800 sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <Image src="/logo.png" alt="Rugby Practice Planner" width={40} height={40} className="h-10 w-auto" />
+            <Image src="/logo.png" alt="Rugby Practice Planner" width={120} height={120} className="h-16 w-auto" />
           </div>
           <div className="hidden md:flex gap-8">
             <a href="#home" className="text-white hover:text-accent transition">Home</a>
@@ -55,7 +55,7 @@ export default function Home() {
               <div className="relative w-full max-w-md">
                 <div className="absolute inset-0 bg-accent rounded-3xl transform -skew-y-3" style={{clipPath: 'polygon(0 0, 100% 5%, 100% 95%, 0 100%)'}}></div>
                 <div className="relative bg-slate-900 rounded-3xl p-8 text-center m-1 transform -skew-y-3" style={{clipPath: 'polygon(0 0, 100% 5%, 100% 95%, 0 100%)'}}>
-              <Image src="/logo.png" alt="Rugby Practice Planner" width={80} height={80} className="h-20 w-auto mx-auto mb-4" />
+              <Image src="/logo.png" alt="Rugby Practice Planner" width={150} height={150} className="h-32 w-auto mx-auto mb-4" />
               <p className="text-slate-300 font-semibold">AI-Powered Session Planning</p>
                 </div>
               </div>
