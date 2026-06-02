@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
@@ -22,8 +23,8 @@ export default function DashboardLayout({
       {/* Header */}
       <header className="bg-slate-950 text-white shadow border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <Link href="/dashboard" className="text-2xl font-bold">
-            🏉 <span className="text-lime-400">Rugby Planner</span>
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <Image src="/logo.png" alt="Rugby Practice Planner" width={100} height={100} className="h-12 w-auto" />
           </Link>
           <div className="flex items-center gap-4">
             <button
