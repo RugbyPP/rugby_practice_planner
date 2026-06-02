@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 export default function CreateSessionPage() {
@@ -81,6 +82,9 @@ export default function CreateSessionPage() {
         <div className="bg-slate-900 rounded-lg shadow border border-slate-800">
           {/* Header */}
           <div className="bg-gradient-to-r from-slate-800 to-slate-700 text-white p-6 border-b border-slate-700">
+            <div className="flex items-center gap-3 mb-4">
+              <Image src="/logo.png" alt="Rugby Practice Planner" width={80} height={80} className="h-14 w-auto" />
+            </div>
             <h1 className="text-3xl font-bold mb-2">Create a Session</h1>
             <p className="text-slate-400">Step {step} of 4 — {
               step === 1 ? 'Player Group' :

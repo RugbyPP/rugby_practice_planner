@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import { getSession } from '@/lib/session-storage'
@@ -121,6 +122,9 @@ export default function SessionPage() {
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Header */}
       <div className="bg-slate-900 rounded-lg shadow border border-slate-800 p-6">
+        <div className="flex items-center gap-3 mb-4">
+          <Image src="/logo.png" alt="Rugby Practice Planner" width={80} height={80} className="h-14 w-auto" />
+        </div>
         <div className="flex justify-between items-start mb-4">
           <div>
             <h1 className="text-3xl font-bold text-accent mb-2">{session.topic}</h1>
