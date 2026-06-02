@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getCurrentUser } from '@/lib/auth';
-import { db } from '@/lib/db';
-import { sessions, adaptations } from '@/lib/db/schema';
 import { generateAdaptation } from '@/lib/llm';
-import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 
+export const dynamic = 'force-dynamic';
+
 const adaptSessionSchema = z.object({
-  sessionId: z.number(),
+  sessionId: z.string(),
   adaptationType: z.enum([
     'pitch_side',
     'assistant_brief',
@@ -20,81 +18,64 @@ const adaptSessionSchema = z.object({
     'one_to_one',
     'small_group',
   ]),
+  planMarkdown: z.string(),
+  ageGrade: z.string(),
+  gender: z.string(),
+  playerCount: z.number().min(1),
+  abilityLevel: z.string(),
+  sessionLength: z.number().min(30).max(120),
+  topic: z.string(),
+  principle: z.string(),
+  struggles: z.string().optional(),
+  desiredOutcome: z.string().optional(),
+  contactLevel: z.string(),
+  equipment: z.string().optional(),
+  space: z.string().optional(),
 });
 
 export async function POST(req: NextRequest) {
   try {
-    const user = await getCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     const body = await req.json();
-    const { sessionId, adaptationType } = adaptSessionSchema.parse(body);
+    console.log('Adapt request body:', JSON.stringify(body));
+    
+    const input = adaptSessionSchema.parse(body);
+    console.log('Parsed adapt input:', JSON.stringify(input));
 
-    // Get session
-    const sessionResult = await db
-      .select()
-      .from(sessions)
-      .where(eq(sessions.id, sessionId))
-      .limit(1);
-
-    if (sessionResult.length === 0) {
-      return NextResponse.json({ error: 'Session not found' }, { status: 404 });
-    }
-
-    const session = sessionResult[0];
-
-    // Verify user owns this session
-    if (session.userId !== user.userId) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-    }
-
-    // Generate adaptation
+    // Generate adaptation using LLM
+    console.log('Calling generateAdaptation...');
     const adaptedMarkdown = await generateAdaptation(
-      session.planMarkdown,
-      adaptationType,
+      input.planMarkdown,
+      input.adaptationType,
       {
-        ageGrade: session.ageGrade,
-        gender: session.gender,
-        playerCount: session.playerCount,
-        abilityLevel: session.abilityLevel,
-        sessionLength: session.sessionLength,
-        topic: session.topic,
-        principle: session.principle,
-        struggles: session.struggles || undefined,
-        desiredOutcome: session.desiredOutcome || undefined,
-        contactLevel: session.contactLevel,
-        equipment: session.equipment || undefined,
-        space: session.space || undefined,
+        ageGrade: input.ageGrade,
+        gender: input.gender,
+        playerCount: input.playerCount,
+        abilityLevel: input.abilityLevel,
+        sessionLength: input.sessionLength,
+        topic: input.topic,
+        principle: input.principle,
+        struggles: input.struggles,
+        desiredOutcome: input.desiredOutcome,
+        contactLevel: input.contactLevel,
+        equipment: input.equipment,
+        space: input.space,
       }
     );
+    console.log('Adaptation generated, length:', adaptedMarkdown?.length);
 
-    // Save adaptation
-    const result = await db
-      .insert(adaptations)
-      .values({
-        sessionId,
-        userId: user.userId,
-        adaptationType,
-        adaptedMarkdown,
-      })
-      .returning();
-
-    return NextResponse.json({
-      adaptation: result[0],
-      adaptedMarkdown,
-    });
+    return NextResponse.json({ adaptedMarkdown });
   } catch (error) {
     if (error instanceof z.ZodError) {
+      console.error('Validation error:', error.errors);
       return NextResponse.json(
         { error: 'Invalid input', details: error.errors },
         { status: 400 }
       );
     }
     console.error('Adaptation error:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: 'Failed to generate adaptation' },
+      { error: 'Failed to generate adaptation', details: errorMessage },
       { status: 500 }
     );
   }

@@ -49,19 +49,36 @@ export default function SessionPage() {
   const handleAdapt = async (adaptationType: string) => {
     setAdaptingType(adaptationType)
     try {
+      if (!session) throw new Error('Session not loaded')
+      
       const res = await fetch('/api/sessions/adapt', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan: session?.plan, adaptationType }),
+        body: JSON.stringify({
+          sessionId: session.id,
+          adaptationType,
+          planMarkdown: session.plan,
+          ageGrade: session.ageGrade,
+          gender: 'mixed', // Default value - can be enhanced later
+          playerCount: session.playerCount,
+          abilityLevel: 'intermediate', // Default value - can be enhanced later
+          sessionLength: session.sessionLength,
+          topic: session.topic,
+          principle: 'development', // Default value - can be enhanced later
+          contactLevel: 'full', // Default value - can be enhanced later
+        }),
       })
 
-      if (!res.ok) throw new Error('Failed to generate adaptation')
+      if (!res.ok) {
+        const errorData = await res.json()
+        throw new Error(errorData.error || 'Failed to generate adaptation')
+      }
 
       const data = await res.json()
-      setAdaptedPlan(data.adaptation)
+      setAdaptedPlan(data.adaptedMarkdown)
     } catch (err) {
       console.error(err)
-      alert('Failed to generate adaptation')
+      alert(`Failed to generate adaptation: ${err instanceof Error ? err.message : 'Unknown error'}`)
     } finally {
       setAdaptingType(null)
     }
