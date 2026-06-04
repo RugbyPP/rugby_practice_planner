@@ -36,14 +36,16 @@ async function initAdmin() {
       })
       .returning();
 
+    console.log('Admin user created:', newAdmin[0]);
     return NextResponse.json(
       { message: 'Admin user created successfully', user: newAdmin[0] },
       { status: 201 }
     );
   } catch (error) {
-    console.error('Error creating admin:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('Error creating admin:', errorMessage, error);
     return NextResponse.json(
-      { error: 'Failed to create admin user' },
+      { error: 'Failed to create admin user', details: errorMessage },
       { status: 500 }
     );
   }
