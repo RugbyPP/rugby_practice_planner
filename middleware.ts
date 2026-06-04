@@ -8,7 +8,6 @@ export function middleware(request: NextRequest) {
     const userId = request.cookies.get('userId');
 
     if (!userId) {
-      // Redirect to login
       return NextResponse.redirect(new URL('/auth/login', request.url));
     }
   }
@@ -18,8 +17,25 @@ export function middleware(request: NextRequest) {
     const userId = request.cookies.get('userId');
 
     if (userId) {
-      // Redirect to dashboard
       return NextResponse.redirect(new URL('/dashboard', request.url));
+    }
+  }
+
+  // Check if admin is trying to access admin dashboard
+  if (pathname.startsWith('/admin/dashboard')) {
+    const adminId = request.cookies.get('adminId');
+
+    if (!adminId) {
+      return NextResponse.redirect(new URL('/admin/login', request.url));
+    }
+  }
+
+  // Check if admin is trying to access admin login while logged in
+  if (pathname === '/admin/login') {
+    const adminId = request.cookies.get('adminId');
+
+    if (adminId) {
+      return NextResponse.redirect(new URL('/admin/dashboard', request.url));
     }
   }
 
@@ -27,5 +43,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/auth/login', '/auth/register'],
+  matcher: ['/dashboard/:path*', '/auth/login', '/auth/register', '/admin/:path*'],
 };
