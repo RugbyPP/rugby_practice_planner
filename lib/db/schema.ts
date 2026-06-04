@@ -49,6 +49,15 @@ export const sessions = pgTable('sessions', {
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
+// Password reset tokens
+export const passwordResetTokens = pgTable('password_reset_tokens', {
+  id: serial('id').primaryKey(),
+  userId: integer('user_id').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  token: varchar('token', { length: 255 }).unique().notNull(),
+  expiresAt: timestamp('expires_at').notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
 // Adaptation history (track variants generated from sessions)
 export const adaptations = pgTable('adaptations', {
   id: serial('id').primaryKey(),
@@ -63,6 +72,11 @@ export const adaptations = pgTable('adaptations', {
 export const usersRelations = relations(users, ({ many }) => ({
   sessions: many(sessions),
   series: many(sessionSeries),
+  passwordResetTokens: many(passwordResetTokens),
+}));
+
+export const passwordResetTokensRelations = relations(passwordResetTokens, ({ one }) => ({
+  user: one(users, { fields: [passwordResetTokens.userId], references: [users.id] }),
 }));
 
 export const sessionSeriesRelations = relations(sessionSeries, ({ one, many }) => ({

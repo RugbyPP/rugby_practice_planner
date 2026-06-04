@@ -1,63 +1,65 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { query } from '@/lib/db/client';
-import { verifyPassword, generateToken, setAuthCookie } from '@/lib/auth';
-import { z } from 'zod';
+import { db } from '@/lib/db';
+import { users } from '@/lib/db/schema';
+import { verifyPassword } from '@/lib/auth-utils';
+import { eq } from 'drizzle-orm';
 
 export const dynamic = 'force-dynamic';
 
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1),
-});
-
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const body = await req.json();
-    const { email, password } = loginSchema.parse(body);
+    const { email, password } = await request.json();
 
-    // Find user with raw query
-    const result = await query(
-      'SELECT id, email, password_hash, name FROM users WHERE email = $1 LIMIT 1',
-      [email]
-    ) as any;
-
-    if (!result.rows || result.rows.length === 0) {
+    // Validate input
+    if (!email || !password) {
       return NextResponse.json(
-        { error: 'Invalid email or password' },
-        { status: 401 }
-      );
-    }
-
-    const user = result.rows[0];
-
-    // Verify password
-    const isValid = await verifyPassword(password, user.password_hash);
-    if (!isValid) {
-      return NextResponse.json(
-        { error: 'Invalid email or password' },
-        { status: 401 }
-      );
-    }
-
-    // Generate token
-    const token = generateToken({ userId: user.id, email: user.email });
-
-    // Set cookie
-    await setAuthCookie(token);
-
-    return NextResponse.json({
-      user: { id: user.id, email: user.email, name: user.name },
-    });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: 'Invalid input', details: error.errors },
+        { error: 'Email and password are required' },
         { status: 400 }
       );
     }
+
+    // Find user
+    const user = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
+
+    if (user.length === 0) {
+      return NextResponse.json(
+        { error: 'Invalid email or password' },
+        { status: 401 }
+      );
+    }
+
+    // Verify password
+    const isValidPassword = await verifyPassword(password, user[0].passwordHash);
+
+    if (!isValidPassword) {
+      return NextResponse.json(
+        { error: 'Invalid email or password' },
+        { status: 401 }
+      );
+    }
+
+    // Set session cookie
+    const response = NextResponse.json(
+      { message: 'Login successful', userId: user[0].id, name: user[0].name },
+      { status: 200 }
+    );
+
+    response.cookies.set('userId', String(user[0].id), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+    });
+
+    return response;
+  } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Login failed' },
       { status: 500 }
     );
   }

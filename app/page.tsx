@@ -5,15 +5,28 @@ export const dynamic = 'force-dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { getSessions } from '@/lib/session-storage';
 
 export default function Home() {
+  const router = useRouter();
   const [sessionCount, setSessionCount] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    // Check if user is logged in
+    const checkAuth = async () => {
+      const response = await fetch('/api/auth/check', { method: 'GET' });
+      if (response.ok) {
+        setIsLoggedIn(true);
+        router.push('/dashboard');
+      }
+    };
+    checkAuth();
+
     const sessions = getSessions();
     setSessionCount(sessions.length);
-  }, []);
+  }, [router]);
 
   return (
     <div className="min-h-screen bg-primary">
@@ -44,12 +57,12 @@ export default function Home() {
                 Age-Grade Specific Training<br />
                 for Every Ability Level
               </p>
-              <Link
-                href="/dashboard/create"
-                className="inline-flex items-center gap-2 bg-accent hover:opacity-90 text-primary font-bold py-3 px-8 rounded-lg transition transform hover:scale-105"
-              >
-                Get Started <span>→</span>
-              </Link>
+            <Link
+              href={isLoggedIn ? '/dashboard' : '/auth/register'}
+              className="inline-flex items-center gap-2 bg-accent hover:opacity-90 text-primary font-bold py-3 px-8 rounded-lg transition transform hover:scale-105"
+            >
+              Get Started <span>→</span>
+            </Link>
             </div>
             <div className="hidden md:flex justify-center">
               {/* Hero Image Box with Lime Border */}
