@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm';
 
 export const dynamic = 'force-dynamic';
 
-export async function POST() {
+async function initAdmin() {
   try {
     // Check if admin already exists
     const existingAdmin = await db
@@ -47,4 +47,12 @@ export async function POST() {
       { status: 500 }
     );
   }
+}
+
+export async function GET() {
+  return initAdmin();
+}
+
+export async function POST() {
+  return initAdmin();
 }
