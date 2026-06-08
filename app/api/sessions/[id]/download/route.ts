@@ -63,18 +63,21 @@ export async function GET(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const pdfBuffer = await generateSessionPDF(pdfData as any);
 
-    // Return PDF as response
-    return new NextResponse(new Uint8Array(pdfBuffer), {
+    // Return HTML as PDF response
+    // The browser will handle printing this HTML to PDF
+    return new NextResponse(pdfBuffer.toString('utf-8'), {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="${sessionData.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_session_plan.pdf"`,
         'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Content-Length': pdfBuffer.length.toString(),
       },
     });
   } catch (error) {
     console.error('PDF generation error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { error: 'Failed to generate PDF' },
+      { error: 'Failed to generate PDF', details: errorMessage },
       { status: 500 }
     );
   }
