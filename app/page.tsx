@@ -195,10 +195,10 @@ export default function Home() {
           </p>
 
           {/* Carousel */}
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-2xl mx-auto">
             <div className="relative bg-slate-900 rounded-xl overflow-hidden border-2 border-accent">
-              {/* Slide Container */}
-              <div className="relative h-96 md:h-[500px] overflow-hidden">
+              {/* Slide Container - Portrait orientation */}
+              <div className="relative h-[600px] md:h-[700px] overflow-hidden aspect-[9/16]">
                 {slides.map((slide, index) => (
                   <div
                     key={index}
@@ -209,11 +209,11 @@ export default function Home() {
                     {/* Placeholder for image - users will add their own */}
                     <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
                       <div className="text-center">
-                        <div className="text-6xl mb-4">📸</div>
+                        <div className="text-6xl mb-4">📱</div>
                         <p className="text-slate-400 text-lg font-semibold">Carousel Image {index + 1}</p>
                         <p className="text-slate-500 text-sm mt-2">Replace with your screenshot</p>
                         <p className="text-slate-600 text-xs mt-4 max-w-xs mx-auto">
-                          Recommended size: 1200x600px
+                          Recommended size: 600x900px (portrait)
                         </p>
                       </div>
                     </div>
@@ -267,7 +267,7 @@ export default function Home() {
       <section className="bg-slate-900 py-20 border-t border-slate-800">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
+            <div className="order-2 md:order-1">
               <h2 className="text-4xl font-bold text-white mb-4">
                 Complete Session Plans
               </h2>
@@ -293,11 +293,11 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="bg-slate-800 rounded-xl p-8 border-2 border-accent h-96 flex items-center justify-center">
+            <div className="bg-slate-800 rounded-xl p-8 border-2 border-accent h-96 md:h-[500px] flex items-center justify-center order-1 md:order-2">
               <div className="text-center">
                 <div className="text-6xl mb-4">📄</div>
                 <p className="text-slate-400 text-lg font-semibold">Full Plan Image</p>
-                <p className="text-slate-500 text-sm mt-2">Add your full session plan screenshot here</p>
+                <p className="text-slate-500 text-sm mt-2">Add your full session plan screenshot (600x800px)</p>
               </div>
             </div>
           </div>
@@ -308,11 +308,11 @@ export default function Home() {
       <section className="bg-primary py-20 border-t border-slate-800">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="bg-slate-900 rounded-xl p-8 border-2 border-accent h-96 flex items-center justify-center order-2 md:order-1">
+            <div className="bg-slate-900 rounded-xl p-8 border-2 border-accent h-96 md:h-[500px] flex items-center justify-center order-2 md:order-1">
               <div className="text-center">
                 <div className="text-6xl mb-4">👨‍👩‍👧</div>
                 <p className="text-slate-400 text-lg font-semibold">Parents Brief Image</p>
-                <p className="text-slate-500 text-sm mt-2">Add your parents brief screenshot here</p>
+                <p className="text-slate-500 text-sm mt-2">Add your parents brief screenshot (600x800px)</p>
               </div>
             </div>
             <div className="order-1 md:order-2">
@@ -375,11 +375,11 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="bg-slate-800 rounded-xl p-8 border-2 border-accent h-96 flex items-center justify-center">
+            <div className="bg-slate-800 rounded-xl p-8 border-2 border-accent h-96 md:h-[500px] flex items-center justify-center">
               <div className="text-center">
                 <div className="text-6xl mb-4">👨‍🏫</div>
                 <p className="text-slate-400 text-lg font-semibold">Assistant Coach Brief Image</p>
-                <p className="text-slate-500 text-sm mt-2">Add your assistant coach brief screenshot here</p>
+                <p className="text-slate-500 text-sm mt-2">Add your assistant coach brief screenshot (600x800px)</p>
               </div>
             </div>
           </div>
