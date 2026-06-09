@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -12,10 +12,44 @@ export default function DashboardLayout({
 }) {
   const router = useRouter()
   const [showMenu, setShowMenu] = useState(false)
+  const [isAuthed, setIsAuthed] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    // Check if user is authenticated by trying to fetch user data
+    const checkAuth = async () => {
+      try {
+        const res = await fetch('/api/auth/me')
+        if (res.ok) {
+          setIsAuthed(true)
+        } else {
+          router.push('/auth/login')
+        }
+      } catch (error) {
+        console.error('Auth check failed:', error)
+        router.push('/auth/login')
+      } finally {
+        setLoading(false)
+      }
+    }
+    checkAuth()
+  }, [])
+
+  if (loading) {
+    return <div className="min-h-screen bg-slate-950 flex items-center justify-center"><p className="text-slate-400">Loading...</p></div>
+  }
+
+  if (!isAuthed) {
+    return null
+  }
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' })
-    router.push('/')
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' })
+    } catch (error) {
+      console.error('Logout failed:', error)
+    }
+    router.push('/auth/login')
   }
 
   return (
