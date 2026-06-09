@@ -48,7 +48,7 @@ export default function SessionPage() {
   const [adaptingType, setAdaptingType] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null)
-  const [downloading, setDownloading] = useState(false)
+  // PDF download feature disabled for now
 
   useEffect(() => {
     const stored = getSession(sessionId)
@@ -111,30 +111,7 @@ export default function SessionPage() {
     }
   }
 
-  const handleDownloadPDF = async () => {
-    if (!session) return
-    setDownloading(true)
-    try {
-      const response = await fetch(`/api/sessions/${session.id}/download`)
-      if (!response.ok) {
-        throw new Error('Failed to download PDF')
-      }
-      const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `${session.topic.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_session_plan.pdf`
-      document.body.appendChild(a)
-      a.click()
-      window.URL.revokeObjectURL(url)
-      document.body.removeChild(a)
-    } catch (err) {
-      console.error('Download failed:', err)
-      alert(`Failed to download PDF: ${err instanceof Error ? err.message : 'Unknown error'}`)
-    } finally {
-      setDownloading(false)
-    }
-  }
+  // PDF download feature disabled for now - will be re-enabled in future
 
   if (loading) {
     return <div className="text-center py-12 text-slate-400">Loading session...</div>
@@ -181,13 +158,6 @@ export default function SessionPage() {
               className="px-4 py-2 bg-accent hover:bg-lime-500 text-primary rounded-lg font-medium transition flex items-center gap-2"
             >
               📋 {copyFeedback || 'Copy'}
-            </button>
-            <button
-              onClick={handleDownloadPDF}
-              disabled={downloading}
-              className="px-4 py-2 bg-accent hover:bg-lime-500 text-primary rounded-lg font-medium transition flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {downloading ? '⏳ Generating...' : '📥 Download PDF'}
             </button>
           </div>
         </div>
