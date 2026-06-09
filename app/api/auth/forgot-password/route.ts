@@ -56,9 +56,11 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('Forgot password error:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('Forgot password error:', errorMessage);
+    console.error('Full error:', error);
     return NextResponse.json(
-      { error: 'Failed to process request' },
+      { error: 'Failed to process request', details: errorMessage },
       { status: 500 }
     );
   }
