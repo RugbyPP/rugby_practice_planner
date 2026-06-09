@@ -65,9 +65,12 @@ export async function POST(request: NextRequest) {
 
     return response;
   } catch (error) {
-    console.error('Login error:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('Login error:', errorMessage);
+    console.error('Full error:', error);
+    console.error('Stack:', error instanceof Error ? error.stack : 'N/A');
     return NextResponse.json(
-      { error: 'Login failed' },
+      { error: 'Login failed', details: errorMessage },
       { status: 500 }
     );
   }
