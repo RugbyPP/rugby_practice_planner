@@ -11,6 +11,7 @@ export default function ForgotPasswordPage() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resetLink, setResetLink] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +31,8 @@ export default function ForgotPasswordPage() {
         return;
       }
 
+      const data = await response.json();
+      setResetLink(data.resetLink || '');
       setSubmitted(true);
     } catch (err) {
       setError('An error occurred. Please try again.');
@@ -50,11 +53,22 @@ export default function ForgotPasswordPage() {
         {submitted ? (
           <div className="bg-slate-900 rounded-lg p-8 border border-slate-800 text-center">
             <div className="mb-4 p-3 bg-green-900 border border-green-700 rounded text-green-200">
-              Check your email for a password reset link
+              Password reset link generated
             </div>
-            <p className="text-slate-400 mb-6">
-              We've sent a password reset link to <strong>{email}</strong>. Please check your email and follow the link to reset your password.
+            <p className="text-slate-400 mb-4 text-sm">
+              We have generated a password reset link for <strong>{email}</strong>.
             </p>
+            {resetLink && (
+              <div className="mb-6 p-4 bg-slate-800 rounded border border-slate-700">
+                <p className="text-slate-300 text-xs mb-2">Reset Link (for testing):</p>
+                <Link href={resetLink} className="text-accent hover:text-lime-300 break-all text-sm font-mono">
+                  {resetLink}
+                </Link>
+                <p className="text-slate-500 text-xs mt-3">
+                  Click the link above to reset your password
+                </p>
+              </div>
+            )}
             <Link href="/auth/login" className="text-accent hover:opacity-80 transition">
               Back to login
             </Link>
