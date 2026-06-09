@@ -18,7 +18,6 @@ export default function Home() {
       try {
         const response = await fetch('/api/auth/me', { method: 'GET' });
         if (response.ok) {
-          setIsLoggedIn(true);
           router.push('/dashboard');
         }
       } catch (error) {
