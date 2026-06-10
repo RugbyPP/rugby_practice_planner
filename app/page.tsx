@@ -206,20 +206,17 @@ export default function Home() {
                       index === currentSlide ? 'opacity-100' : 'opacity-0'
                     }`}
                   >
-                    {/* Placeholder for image - users will add their own */}
-                    <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="text-6xl mb-4">📱</div>
-                        <p className="text-slate-400 text-lg font-semibold">Carousel Image {index + 1}</p>
-                        <p className="text-slate-500 text-sm mt-2">Replace with your screenshot</p>
-                        <p className="text-slate-600 text-xs mt-4 max-w-xs mx-auto">
-                          Recommended size: 600x900px (portrait)
-                        </p>
-                      </div>
-                    </div>
+                    {/* Display actual image */}
+                    <Image
+                      src={slide.placeholder}
+                      alt={slide.title}
+                      fill
+                      className="object-cover"
+                      priority={index === 0}
+                    />
 
                     {/* Text Overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900 to-transparent p-8">
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent p-8">
                       <h3 className="text-2xl font-bold text-white mb-2">{slide.title}</h3>
                       <p className="text-slate-300">{slide.description}</p>
                     </div>
@@ -293,12 +290,13 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="bg-slate-800 rounded-xl p-8 border-2 border-accent h-96 md:h-[500px] flex items-center justify-center order-1 md:order-2">
-              <div className="text-center">
-                <div className="text-6xl mb-4">📄</div>
-                <p className="text-slate-400 text-lg font-semibold">Full Plan Image</p>
-                <p className="text-slate-500 text-sm mt-2">Add your full session plan screenshot (600x800px)</p>
-              </div>
+            <div className="relative rounded-xl overflow-hidden border-2 border-accent h-96 md:h-[500px] order-1 md:order-2">
+              <Image
+                src="/full-plan.png"
+                alt="Full Session Plan"
+                fill
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
@@ -308,12 +306,13 @@ export default function Home() {
       <section className="bg-primary py-20 border-t border-slate-800">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="bg-slate-900 rounded-xl p-8 border-2 border-accent h-96 md:h-[500px] flex items-center justify-center order-2 md:order-1">
-              <div className="text-center">
-                <div className="text-6xl mb-4">👨‍👩‍👧</div>
-                <p className="text-slate-400 text-lg font-semibold">Parents Brief Image</p>
-                <p className="text-slate-500 text-sm mt-2">Add your parents brief screenshot (600x800px)</p>
-              </div>
+            <div className="relative rounded-xl overflow-hidden border-2 border-accent h-96 md:h-[500px] order-2 md:order-1">
+              <Image
+                src="/parents-brief.png"
+                alt="Parents Brief"
+                fill
+                className="object-cover"
+              />
             </div>
             <div className="order-1 md:order-2">
               <h2 className="text-4xl font-bold text-white mb-4">
@@ -375,12 +374,13 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="bg-slate-800 rounded-xl p-8 border-2 border-accent h-96 md:h-[500px] flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-6xl mb-4">👨‍🏫</div>
-                <p className="text-slate-400 text-lg font-semibold">Assistant Coach Brief Image</p>
-                <p className="text-slate-500 text-sm mt-2">Add your assistant coach brief screenshot (600x800px)</p>
-              </div>
+            <div className="relative rounded-xl overflow-hidden border-2 border-accent h-96 md:h-[500px]">
+              <Image
+                src="/assistant-brief.png"
+                alt="Assistant Coach Brief"
+                fill
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
